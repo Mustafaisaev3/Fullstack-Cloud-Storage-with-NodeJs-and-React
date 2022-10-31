@@ -4,5 +4,5 @@ import { userReducer } from './ducks/users/reducer'
 
 export const rootReducer = combineReducers({
     files: fileReducer,
-    users: userReducer
+    user: userReducer
 })
