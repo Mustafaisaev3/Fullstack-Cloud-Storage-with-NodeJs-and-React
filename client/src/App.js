@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser, selectIsAuth } from './store/ducks/users/selectors';
 import { useEffect } from 'react';
 import { SetUser } from './store/ducks/users/actions';
+import Layout from './layout/Layout';
+import Files from './pages/Files';
 
 function App() {
   const dispatch = useDispatch()
@@ -14,26 +16,28 @@ function App() {
   const user = useSelector(selectCurrentUser)
   console.log(user)
 
-  useEffect(() => {
-    dispatch(SetUser())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(SetUser())
+  // }, [])
   return (
     <BrowserRouter>
-      {/* {!isAuth && 
-          <Switch>
-            <Route path={'/registration'} component={Registration} />
-            <Route path={'/login'} component={Login} />
-          </Switch>
-      } */}
-      {!isAuth 
+      <Layout>
+        <Switch>
+          <Route path={'/files'} component={Files} />
+          <Route path={'/'} component={Home} />
+        </Switch>
+      </Layout>
+      {/* {!isAuth 
         ?
           <Switch>
             <Route path={'/registration'} component={Registration} />
             <Route path={'/login'} component={Login} />
           </Switch>
         :
-          <Route path={'/'} component={Home} />
-      }
+          <Layout>
+            <Route path={'/'} component={Home} />
+          </Layout>
+      } */}
     </BrowserRouter>
   );
 }
