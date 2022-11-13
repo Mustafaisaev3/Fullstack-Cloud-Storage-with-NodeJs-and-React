@@ -12,6 +12,9 @@ import { useStorageComponent } from '../hooks/useStorages'
 import { selectCurrentDir } from '../store/ducks/files/selectors'
 import { setFiles } from '../store/ducks/files/actions'
 
+import { BiDotsVerticalRounded } from 'react-icons/bi'
+import FoldersBlock from '../components/Home/FoldersBlock'
+
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -34,7 +37,12 @@ const Home = () => {
             <StorageCard storageName={'OneDrive'} />
         </div>
         <QuickAccessBlock />
+        <FoldersBlock />
         <div className='grow overflow-y-hidden'>
+            <div className='flex items-center justify-between pb-5'>
+                <div className='text-2xl text-[#8997a1]'>Recently Added</div>
+                <BiDotsVerticalRounded size={25} color={'#8997a1'} />
+            </div>
             <TableContainer>
                 <Table>
                     <TableHeader>

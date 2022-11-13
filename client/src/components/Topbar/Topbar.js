@@ -2,6 +2,7 @@ import React from 'react'
 import SearchInput from '../Search/SearchInput'
 // import {AiOutlineBell} from 'react-icons/ai'
 import {FaRegBell, FaUser} from 'react-icons/fa'
+import {BsFolderPlus} from 'react-icons/bs'
 import { useUI } from '../../context/ui.context'
 
 const Topbar = () => {
@@ -16,7 +17,10 @@ const Topbar = () => {
   return (
     <div className='flex justify-between items-center'>
         <SearchInput />
-        <div className='flex items-center justify-center w-[200px] h-full p-[10px] rounded-lg bg-[#2ba7ff] text-white cursor-pointer' onClick={addFolderBtnClick}>Add Folder</div>
+        <div className='flex items-center justify-center w-[200px] h-full p-[10px] rounded-lg bg-[#2ba7ff] text-white cursor-pointer' onClick={addFolderBtnClick}>
+            <BsFolderPlus color='white' size={25} className='mr-3' />
+            Add Folder
+        </div>
         <div className='flex items-center'>
             <div className='cursor-pointer'>
                 <FaRegBell size={25} color={'#8997a1'} />

@@ -6,7 +6,6 @@ const File = require('../models/File')
 class FileController {
     async createDir (req, res) {
         try {
-            console.log(req.body)
             const {name, type, parent} = req.body
             const file = new File({name, type, parent, user: req.user.id})
 
@@ -26,7 +25,7 @@ class FileController {
             return res.json(file)
 
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             return res.status(400).json(error)
         }
     }
@@ -34,16 +33,38 @@ class FileController {
     async getFiles (req, res) {
 
         try {
-            const files = await File.find({user: req.user.id, parent: req.query.parent})
-            console.log('sgsgsgsgsgssgsgg',files,'shshshsshsssshshhshs')
+            let files = undefined
+            if (req.query.parent) {
+                files = await File.find({user: req.user.id, parent: req.query.parent})
+            } else {
+                files = await File.find({user: req.user.id})
+            }
+            // console.log('sgsgsgsgsgssgsgg',files,'shshshsshsssshshhshs')
             return res.json(files)
 
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             return res.status(500).json({message: "Can not get files"})
         }
 
     }
+
+    async getFile (req, res) {
+
+        try {
+            const { id } = req.body
+            const file = await File.find({_id: id})
+
+            console.log(file,'shshshsshs')
+            return res.json(file)
+
+        } catch (error) {
+            // console.log(error)
+            return res.status(500).json({message: "Can not find file"})
+        }
+
+    }
+
 }
 
 module.exports = new FileController()

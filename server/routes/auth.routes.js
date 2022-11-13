@@ -38,7 +38,7 @@ router.post('/registration', async (req, res) => {
 
         await user.save()
         const file_user = await fileService.createDir(new File({user: user.id, name: ''}))
-        console.log(file_user)
+        // console.log(file_user)
         return res.json({message: 'user was created'})
         
     } catch (error) {
