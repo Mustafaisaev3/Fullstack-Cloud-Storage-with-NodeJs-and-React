@@ -47,3 +47,15 @@ export const addFile = (dirId, name) => {
             })
     }
 }
+
+export const uploadFile = (file, dirId) => {
+    return dispatch => {
+        FilesService.uploadFile(file, dirId)
+            .then(response => {
+                dispatch({
+                    type: ADD_FILE,
+                    payload: response
+                })
+            })
+    }
+}

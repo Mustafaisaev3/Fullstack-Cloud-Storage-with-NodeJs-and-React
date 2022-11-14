@@ -47,7 +47,7 @@ const Files = () => {
         <div className='text-2xl text-[#8997a1]'>Files</div>
         <div className='w-full flex pt-5'>
 
-          <div className='w-[400px] h-full'>
+          <div className='w-[400px] h-full overflow-hidden'>
             <div>MY FOLDERS</div>
             <div>
 

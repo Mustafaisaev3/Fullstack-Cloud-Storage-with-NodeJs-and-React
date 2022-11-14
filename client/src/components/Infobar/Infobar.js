@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import FileInfo from './FileInfo'
 
 // Icons
@@ -7,8 +7,38 @@ import { FaFileImage, FaRegFileImage } from 'react-icons/fa'
 import { RiFileTextFill } from 'react-icons/ri'
 import { MdInsertDriveFile } from 'react-icons/md'
 import { AiOutlineCloudUpload } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
+import { uploadFile } from '../../store/ducks/files/actions'
+import { selectCurrentDir } from '../../store/ducks/files/selectors'
 
 const Infobar = () => {
+    const [dragEnter, setDragEnter] = useState(false)
+    const currentDir = useSelector(selectCurrentDir)
+    const dispatch = useDispatch()
+
+    function handleDragEnter (e) {
+        e.preventDefault()
+        // e.stopPropagation()
+        setDragEnter(true)   
+    }
+
+    function handleDragLeave (e) {
+        e.preventDefault()
+        // e.stopPropagation()
+        setDragEnter(false)  
+    }
+
+    function handleOnDrop (e) {
+        e.preventDefault()
+        // e.stopPropagation()
+        const files = [...e.dataTransfer.files]
+        console.log(files)
+
+        files.forEach(file => dispatch(uploadFile(file, currentDir)))
+        setDragEnter(false)  
+    }
+
+
   return (
     <div className='w-[400px] h-screen fixed top-0 right-0 bg-[#f4f8f9]'>
         <div className='w-full h-full flex flex-col p-[50px] rounded-l-2xl bg-white'>
@@ -31,10 +61,10 @@ const Infobar = () => {
                 <FileInfo title={'Other Files'} space={120} fileSpace={80} color={'#9b45ed'} icon={<MdInsertDriveFile size={25} color={'#9b45ed'} />} />
                 <FileInfo title={'Unknown Files'} space={120} fileSpace={65} color={'#7e93ac'} icon={<MdInsertDriveFile size={25} color={'#7e93ac'} />} />
             </div>
-            <div className='w-full h-auto'>
+            <div className='w-full h-auto' onDrop={(e) => handleOnDrop(e)} onDragEnter={(e) => handleDragEnter(e)} onDragLeave={(e) => handleDragLeave(e)} onDragOver={(e) => handleDragEnter(e)}>
                 <div className='w-full h-[150px] flex flex-col items-center justify-center rounded-xl border-[#7c8d96] border-[2px] border-dashed'>
                     <div className='text-xl pb-2'>Upload File</div>
-                    <AiOutlineCloudUpload size={60} color={'#7c8d96'} />
+                    <AiOutlineCloudUpload size={60} color={dragEnter ? '#15b0bd' : '#7c8d96'} />
                 </div>
             </div>
         </div>
