@@ -16,7 +16,7 @@ const Modal = ({open, onClose, children}) => {
   return (
         <Portal>
             {open && <div className='flex items-center justify-center absolute left-0 top-0 w-full h-full z-[1000] bg-[#0000005c]' ref={modalRootRef}>
-                <div ref={modalInnerRef}>
+                <div className='w-auto h-auto rounded-md overflow-hidden ' ref={modalInnerRef}>
                     {children}
                 </div>
             </div>}

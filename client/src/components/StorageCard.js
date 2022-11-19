@@ -19,7 +19,7 @@ const StorageCard = ({storageName}) => {
                     <div className='text-white text-sm'>62 Gb / 127 Gb</div>
                 </div>
                 {/* <div className='w-[50px] h-[50px] flex items-center justify-center rounded-full bg-[#64bbf566]'></div> */}
-                <CircularProgressBar textLength={25} />
+                <CircularProgressBar progress={25} radius={30} />
             </div>
         </div>
     </Card>

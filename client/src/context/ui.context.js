@@ -3,6 +3,8 @@ import React, {createContext, useReducer, useMemo, useContext} from "react";
 export const initialState = {
     showModal: false,
     modalView: 'ADD_FOLDER_VIEW',
+    modalData: undefined,
+    showUploader: false,
 }
 
 export const UIContext = createContext(initialState);
@@ -22,6 +24,24 @@ export const UIReducer = (state = initialState, action) => {
                 modalView: action.view
             }
 
+        case 'SET_MODAL_DATA':
+            return {
+                ...state,
+                modalData: action.data
+            }
+
+        case 'OPEN_UPLOADER':
+            return {
+                ...state,
+                showUploader: true
+            }
+
+        case 'CLOSE_UPLOADER':
+            return {
+                ...state,
+                showUploader: false
+            }
+
         default:
             return state
     }
@@ -34,6 +54,9 @@ export const UIProvider = (props) => {
     const openModal = () => dispatch({type: 'OPEN_MODAL'})
     const closeModal = () => dispatch({type: 'CLOSE_MODAL'})
     const setModalView = (view) => dispatch({type: 'SET_MODAL_VIEW', view})
+    const setModalData = (data) => dispatch({type: 'SET_MODAL_DATA', data})
+    const openUploader = () => dispatch({type: 'OPEN_UPLOADER'})
+    const closeUploader = () => dispatch({type: 'CLOSE_UPLOADER'})
 
   
     const value = useMemo(
@@ -42,6 +65,9 @@ export const UIProvider = (props) => {
         openModal,
         closeModal,
         setModalView,
+        setModalData,
+        openUploader,
+        closeUploader,   
       }),
       [state]
     );

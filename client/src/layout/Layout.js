@@ -2,6 +2,7 @@ import React from 'react'
 import Infobar from '../components/Infobar/Infobar'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Topbar from '../components/Topbar/Topbar'
+import ManagedUploader from '../components/Uploader/ManagedUploader'
 
 const Layout = ({children}) => {
   return (
@@ -13,6 +14,7 @@ const Layout = ({children}) => {
             {children}
         </div>
         <Infobar />
+        <ManagedUploader />
     </div>
   )
 }

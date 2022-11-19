@@ -1,0 +1,1 @@
+export const selectUploadFiles = (state) => state.uploads.files

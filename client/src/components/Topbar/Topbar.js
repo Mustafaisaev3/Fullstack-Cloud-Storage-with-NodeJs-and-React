@@ -6,10 +6,10 @@ import {BsFolderPlus} from 'react-icons/bs'
 import { useUI } from '../../context/ui.context'
 
 const Topbar = () => {
-    const {openModal, setModalView, showModal, modalView} = useUI()
+    const {openModal, setModalView, showModal, modalView, openUploader} = useUI()
 
     const addFolderBtnClick = () => {
-        // setModalView('ADD_FOLDER_VIEW')
+        setModalView('ADD_FOLDER_VIEW')
         console.log(showModal, modalView)
         openModal()
     }
@@ -27,7 +27,7 @@ const Topbar = () => {
             </div>
             <div className='flex items-center pl-6'>
                 <div className='pr-2'>Hi, Danik</div>
-                <div className='w-[50px] h-[50px] flex items-center justify-center rounded-full bg-[#8997a1]'>
+                <div className='w-[50px] h-[50px] flex items-center justify-center rounded-full bg-[#8997a1]' onClick={() => openUploader()}>
                     <FaUser size={20} color={'white'} />
                 </div>
             </div>

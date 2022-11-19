@@ -1,4 +1,4 @@
-import { SET_FILES, SET_CURRENT_DIR, ADD_FILE, SET_ALL_FILES } from "./actions"
+import { SET_FILES, SET_CURRENT_DIR, ADD_FILE, SET_ALL_FILES, DELETE_FILE } from "./actions"
 
 const initialState = {
     allFiles: [],
@@ -20,6 +20,9 @@ export const fileReducer = (state = initialState, action) => {
 
         case ADD_FILE:
             return {...state, files: [...state.files, action.payload]}
+
+        case DELETE_FILE:
+            return {...state, files: [...state.files.filter(file => file._id !== action.payload) ]}
 
         default:
             return state

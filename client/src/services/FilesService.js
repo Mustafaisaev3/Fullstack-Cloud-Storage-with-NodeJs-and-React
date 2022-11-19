@@ -42,7 +42,7 @@ export const getFile = async (id) => {
 
 export const createDir = async (dirId, name) => {
     try {
-        const response = await axios.get(`http://localhost:5000/api/files`,{
+        const response = await axios.post(`http://localhost:5000/api/files`,{
             name,
             parent: dirId,
             type: 'dir'
@@ -88,14 +88,14 @@ export const uploadFile = async (file, dirId) => {
 
 export const downloadFile = async (file) => {
     try {
-        const responce = await fetch(`http://localhost:5000/api/files/download/?id=${file._id}`, {
+        const response = await fetch(`http://localhost:5000/api/files/download/?id=${file._id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
 
-        if (responce.status === 200){
-            const blob = await responce.blob()
+        if (response.status === 200){
+            const blob = await response.blob()
             const downloadUrl = window.URL.createObjectURL(blob)
             console.log(downloadUrl)
 
@@ -111,4 +111,33 @@ export const downloadFile = async (file) => {
     }
 }
 
-export default {getFiles, getAllFiles, createDir, uploadFile, downloadFile};
+export const deleteFile = async (file) => {
+    try {
+        const response = await axios.delete(`http://localhost:5000/api/files/?id=${file._id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        return file._id
+
+    } catch (error) {
+        console.log('Delete error ', error)
+    }
+}
+
+export const searchFile = async (searchWord) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/files/search/?search=${searchWord}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        return response.data
+        // console.log(response.data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export default {getFiles, getAllFiles, createDir, uploadFile, downloadFile, deleteFile, searchFile};

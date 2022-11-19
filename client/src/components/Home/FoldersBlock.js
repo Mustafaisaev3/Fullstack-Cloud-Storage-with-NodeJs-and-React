@@ -34,9 +34,9 @@ const FoldersBlock = () => {
         <div className='flex gap-4'>
             <div className='flex gap-4 overflow-x-scroll'>
                 {files && files.map((file) => {
-                    return  <Card classes='bg-[white] p-2 min-w-[120px]'>
+                    return  <Card classes='bg-[white] p-2 min-w-[200px]'>
                                 <div className='w-full h-full flex flex-col items-center justify-center'>
-                                    <FaFolder size={60} color={'#36a1ea'} />
+                                    <FaFolder size={80} color={'#36a1ea'} />
                                     <div>{file.name}</div>
                                 </div>
                             </Card>

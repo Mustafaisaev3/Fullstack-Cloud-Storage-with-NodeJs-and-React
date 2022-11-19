@@ -1,6 +1,7 @@
 import { useUI } from "../../../context/ui.context";
 // import AddFolderView from "../../ModalViews/AddFolderView";
 import AddFolderView from "../../ModalViews/AddFolderView";
+import QuickSearchView from "../../ModalViews/QuickSearchView";
 import Modal from "./Modal";
 
 
@@ -9,6 +10,7 @@ const ManagedModal = () => {
 	return (
 		<Modal open={showModal} onClose={closeModal}>
 			{modalView === "ADD_FOLDER_VIEW" && <AddFolderView />}
+			{modalView === "QUICK_SEARCH_VIEW" && <QuickSearchView />}
 		</Modal>
 	);
 };
