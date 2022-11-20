@@ -24,6 +24,7 @@ import { setAllFiles } from '../../store/ducks/files/actions'
 import DeleteButton from '../UI/Buttons/DeleteButton'
 import DownloadButton from '../UI/Buttons/DownloadButton'
 import { useUI } from '../../context/ui.context'
+import RenameFileInput from '../RenameFileInput.js/RenameFileInput'
 
 
 const QuickSearchView = () => {
@@ -32,19 +33,11 @@ const QuickSearchView = () => {
   const allfiles = useSelector(selectAllFiles)
   const [files, setFiles] = useState([])
 
+
   const [activeFile, setActiveFile] = useState(modalData)
 
   const handleQuickAccessItemClick = (item) => {
     setActiveFile(item)
-    // setActiveFileType(item.type)
-    // let filteredFiles = []
-    // allfiles.map(file => {
-    //     if(file.type !== 'dir' && item.fileTypes.includes(file.type)){
-    //         filteredFiles.push(file)
-    //         console.log(file)
-    //     }
-    // })
-    // setFiles(filteredFiles)
   }
 
   useEffect(() => {
@@ -61,6 +54,8 @@ const QuickSearchView = () => {
   useEffect(() => {
     dispatch(setAllFiles())
   }, [])
+
+
 
   return (
     <div className='w-[700px] h-[500px] bg-white flex flex-col '>
@@ -101,7 +96,7 @@ const QuickSearchView = () => {
                         <TableBody>
                             {files && files.map(file => {
                             return <TableRow columnNumber={6}>
-                                        <TableCell title={file.name} colSpan={2}  />
+                                        <RenameFileInput file={file} colSpan={2} />
                                         <TableCell title={file.type} />
                                         <TableCell title={file.date.slice(0,10)} className={'justify-center'} />
                                         <TableCell title={file.type === 'dir' ? '-' : file.size} className={'justify-center'}  />                                                                                      

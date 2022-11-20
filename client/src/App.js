@@ -12,6 +12,7 @@ import Layout from './layout/Layout';
 import Files from './pages/Files';
 import { selectFiles, selectFilesState } from './store/ducks/files/selectors';
 import ManagedModal from './components/UI/Modal/ManagedModal';
+import ManagedConfirmationModal from './components/UI/ConfirmationModal/ManagetConfirmationModal';
 
 function App() {
   const dispatch = useDispatch()
@@ -34,6 +35,7 @@ function App() {
               <Route path={'/'} component={Home} />
             </Switch>
             <ManagedModal />
+            <ManagedConfirmationModal />
           </Layout>
           {/* {!isAuth 
             ?

@@ -5,6 +5,10 @@ export const initialState = {
     modalView: 'ADD_FOLDER_VIEW',
     modalData: undefined,
     showUploader: false,
+    displayConfirmationModal: false,
+    confirmationModalView: "CONFIRMATION_MODAL_VIEW",
+    confirmationModalData: null,
+  
 }
 
 export const UIContext = createContext(initialState);
@@ -42,6 +46,31 @@ export const UIReducer = (state = initialState, action) => {
                 showUploader: false
             }
 
+        case "OPEN_CONFIRMATION_MODAL":
+            return {
+                ...state,
+                displayConfirmationModal: true,
+            };
+
+        case "CLOSE_CONFIRMATION_MODAL": 
+            return {
+                ...state,
+                displayConfirmationModal: false,
+            };
+
+        case "SET_CONFIRMATION_MODAL_VIEW": 
+            return {
+                ...state,
+                confirmationModalView: action.view,
+            };
+
+        case "SET_CONFIRMATION_MODAL_DATA": 
+            return {
+                ...state,
+                confirmationModalData: action.data,
+            };
+        
+
         default:
             return state
     }
@@ -58,6 +87,11 @@ export const UIProvider = (props) => {
     const openUploader = () => dispatch({type: 'OPEN_UPLOADER'})
     const closeUploader = () => dispatch({type: 'CLOSE_UPLOADER'})
 
+    const openConfirmationModal = () => dispatch({ type: "OPEN_CONFIRMATION_MODAL" });
+    const closeConfirmationModal = () => dispatch({ type: "CLOSE_CONFIRMATION_MODAL" });
+    const setConfirmationModalView = (view) => dispatch({ type: "SET_CONFIRMATION_MODAL_VIEW", view });
+    const setConfirmationModalData = (data) => dispatch({ type: "SET_CONFIRMATION_MODAL_DATA", data });
+
   
     const value = useMemo(
       () => ({
@@ -67,7 +101,11 @@ export const UIProvider = (props) => {
         setModalView,
         setModalData,
         openUploader,
-        closeUploader,   
+        closeUploader, 
+        openConfirmationModal,
+        closeConfirmationModal,
+        setConfirmationModalView,
+        setConfirmationModalData,  
       }),
       [state]
     );
