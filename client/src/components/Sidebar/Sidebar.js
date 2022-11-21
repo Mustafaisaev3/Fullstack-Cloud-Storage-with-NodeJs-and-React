@@ -29,10 +29,12 @@ const Sidebar = () => {
                     </a>
                 </MenuItem>
                 <MenuItem>
-                    <FaUsers size={40} color={'white'} />
+                    <a href="/chat">
+                        <BiMessageSquareDots size={40} color={'white'} />
+                    </a>
                 </MenuItem>
                 <MenuItem>
-                    <BiMessageSquareDots size={40} color={'white'} />
+                    <FaUsers size={40} color={'white'} />
                 </MenuItem>
                 <MenuItem>
                     <SlSettings size={40} color={'white'} />
