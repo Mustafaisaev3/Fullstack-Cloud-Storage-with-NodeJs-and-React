@@ -8,6 +8,7 @@ const RenameFileInput = ({className, colSpan, file}) => {
     const [changeFileName, setChangeFileName] = useState(file.name)
 
     const handleChangeFileName = (e) => {
+        e.stopPropagation()
         if (e.detail === 2) {
             setShowChangeNameInput(true)
         }

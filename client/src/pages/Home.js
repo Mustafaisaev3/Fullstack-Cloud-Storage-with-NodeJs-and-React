@@ -30,7 +30,7 @@ const Home = () => {
 
   return (
         // <div className='border p-3 rounder-md cursor-pointer' onClick={() => dispatch(LogoutUser())}>Logout</div>
-    <div className='flex flex-col h-full py-5  '>
+    <div className='flex flex-col h-full py-5 overflow-y-scroll '>
         <div className='flex items-center pt-5 gap-8'>
             <StorageCard storageName={'DropBox'} />
             <StorageCard storageName={'GoogleDrive'} />

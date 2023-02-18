@@ -1,18 +1,19 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const config = require('config')
-const fileuloader = require('express-fileupload')
+const fileuploader = require('express-fileupload')
 const cors = require('./middleware/cors.middleware')
 // const corsMiddleware = require('./middleware/cors.middleware')
 // var cors = require('cors')
 
 const authRouter = require('./routes/auth.routes')
 const fileRouter = require('./routes/file.routes')
+const chatRouter = require('./routes/chat.routes')
 
 const app = express()
 const PORT = config.get('serverPort')
 
-app.use(fileuloader({}))
+app.use(fileuploader({}))
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/files', fileRouter)
+app.use('/api/chat', chatRouter)
 
 const start = async () => {
     try {

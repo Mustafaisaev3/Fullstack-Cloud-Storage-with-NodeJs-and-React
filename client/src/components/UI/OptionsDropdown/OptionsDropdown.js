@@ -12,7 +12,7 @@ const OptionsDropdown = ({children}) => {
     setShowDropdown(!showDropdown)
   }
   return (
-    <div className='relative' ref={InnerRef}>
+    <div className='relative z-10' ref={InnerRef}>
         <div onClick={() => setShowDropdown(!showDropdown)}>
             <BiDotsVerticalRounded size={25} color={'#8997a1'} />
         </div>

@@ -38,6 +38,7 @@ router.post('/registration', async (req, res) => {
 
         await user.save()
         const file_user = await fileService.createDir(new File({user: user.id, name: ''}))
+        const shared_files = await fileService.createDir(new File({user: user.id, name: '', path: 'shared'}))
         // console.log(file_user)
         return res.json({message: 'user was created'})
         
@@ -65,7 +66,10 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({message: "Password is incorrect"})
         }
 
-        const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: '1h'})
+        // const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: '1h'})
+        const token = jwt.sign({id: user.id}, config.get('secretKey'))
+
+        console.log(user)
 
         return res.json({
             token,
@@ -89,7 +93,7 @@ router.get('/auth', authMiddleware, async (req, res) => {
     try {
         const user = await User.findOne({_id: req.user.id})
 
-        const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: '1h'})
+        const token = jwt.sign({id: user.id}, config.get('secretKey'))
 
         return res.json({
             token,

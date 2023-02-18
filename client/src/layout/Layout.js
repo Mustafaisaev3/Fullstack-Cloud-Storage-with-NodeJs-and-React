@@ -1,19 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Infobar from '../components/Infobar/Infobar'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Topbar from '../components/Topbar/Topbar'
 import ManagedUploader from '../components/Uploader/ManagedUploader'
 
 const Layout = ({children}) => {
+  const [showInfobar, setShowInfobar] = useState(false)
+
   return (
-    <div className='bg-[#36a1ea]'>
+    <div className='w-screen h-screen bg-[#36a1ea] flex overflow-hidden'>
         <Sidebar />
-        <div className='h-screen bg-[#e3f2f5] ml-[100px] mr-[400px] rounded-l-2xl p-[50px]'>
-        {/* <div className='h-screen bg-[#f4f8f9] ml-[100px] mr-[400px] rounded-l-2xl p-[50px]'> */}
-            <Topbar />
+        <div className='h-screen flex-1 bg-[#e3f2f5] rounded-l-2xl p-[20px] overflow-hidden'>
+            <Topbar setShowInfobar={setShowInfobar} />
             {children}
         </div>
-        <Infobar />
+        {showInfobar ? <Infobar setShowInfobar={setShowInfobar} /> : null}
         <ManagedUploader />
     </div>
   )

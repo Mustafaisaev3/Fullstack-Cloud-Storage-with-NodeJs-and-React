@@ -19,6 +19,7 @@ const FoldersBlock = () => {
   const {openModal} = useUI()
 
   const files = useSelector(selectFiles)
+  console.log(files)
 
   return (
     <div className='w-full py-10'>

@@ -62,6 +62,8 @@ export const uploadFile = async (file, dirId) => {
         const formData = new FormData()
         formData.append('file', file)
 
+        console.log(formData, 'formData')
+
         if(dirId) {
             formData.append('parent', dirId)
         }

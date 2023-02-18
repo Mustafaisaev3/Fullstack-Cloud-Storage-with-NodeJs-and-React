@@ -23,9 +23,10 @@ export const LoginUser = (email, password) => {
     return dispatch => {
         AuthService.login(email,password)
             .then((response) => {
+                const user = response.data.user
                 dispatch({
-                    type: LOGIN_USER,
-                    payload: response.data
+                    type: SET_USER,
+                    payload: user
                 })
             })
     }

@@ -6,11 +6,13 @@ import { BiMessageSquareDots } from 'react-icons/bi'
 import { SlSettings } from 'react-icons/sl'
 import { AiOutlineCloudUpload } from 'react-icons/ai'
 import MenuItem from './MenuItem'
+import { useHistory } from 'react-router-dom'
 
 
 const Sidebar = () => {
+  const history = useHistory()
   return (
-    <div className='h-screen w-[100px] py-[50px] fixed bg-[#36a1ea] top-0 left-0 flex flex-col items-center'>
+    <div className='w-[100px] h-screen px-[10px] py-[50px] bg-[#36a1ea] flex flex-col items-center'>
         <div className='pb-[50px]'>
             <div className='w-[70px] h-[70px] flex items-center justify-center cursor-pointer p-3 bg-white rounded-xl'>
                 <img src='assets/logo.png' />
@@ -19,19 +21,28 @@ const Sidebar = () => {
         <div className='h-full flex flex-col items-center justify-between'>
             <div className='w-full flex flex-col gap-4 '>
                 <MenuItem active={true}>
-                    <a href="/">
+                    {/* <a href="/">
                         <HiHome size={40} color={'white'} />
-                    </a>
+                    </a> */}
+                    <div onClick={() => history.push('/')}>
+                        <HiHome size={40} color={'white'} />
+                    </div>
                 </MenuItem>
                 <MenuItem>
-                    <a href="/files">
+                    {/* <a href="/files">
                         <FaFolder size={40} color={'white'} />
-                    </a>
+                    </a> */}
+                    <div onClick={() => history.push('/files')}>
+                        <FaFolder size={40} color={'white'} />
+                    </div>
                 </MenuItem>
                 <MenuItem>
-                    <a href="/chat">
+                    <div onClick={() => history.push('/chat')}>
                         <BiMessageSquareDots size={40} color={'white'} />
-                    </a>
+                    </div>
+                    {/* <a href="/chat">
+                        <BiMessageSquareDots size={40} color={'white'} />
+                    </a> */}
                 </MenuItem>
                 <MenuItem>
                     <FaUsers size={40} color={'white'} />

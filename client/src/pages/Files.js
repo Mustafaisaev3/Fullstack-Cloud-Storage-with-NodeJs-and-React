@@ -1,34 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
+import { useUI } from '../context/ui.context'
 
-import TableContainer from '../components/UI/Table/TableContainer'
-import Table from '../components/UI/Table/Table'
-import TableHeader from '../components/UI/Table/TableHeader'
-import TableRow from '../components/UI/Table/TableRow'
-import TableCell from '../components/UI/Table/TableCell'
-import TableBody from '../components/UI/Table/TableBody'
 import { useStorageComponent } from '../hooks/useStorages'
-import { selectFileIcon } from '../hooks/useFileIcon'
+import { uploadFile } from '../store/ducks/files/actions'
 
 
-import { TiArrowSortedDown } from 'react-icons/ti'
-import { FaFolderOpen } from 'react-icons/fa'
-import { BsFolder2Open } from 'react-icons/bs'
-import { HiDownload } from 'react-icons/hi'
-import { MdDeleteForever } from 'react-icons/md'
-import { FaFolder } from 'react-icons/fa'
-import FolderParent from '../components/FolderTree/FolderParent'
-import { downloadFile, getFile, getFiles } from '../services/FilesService'
+import { IoMdAddCircleOutline } from 'react-icons/io'
+import { MdDownloading } from 'react-icons/md'
+// import { GiHamburgerMenu } from 'react-icons/gi'
+import { ImMenu } from 'react-icons/im'
+import { BsFolder2Open, BsFillGridFill } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentDir, selectFiles, selectAllFiles } from '../store/ducks/files/selectors'
-import FolderStructure from '../components/FolderTree/FolderStructure'
-import { setFiles, setAllFiles, deleteFile } from '../store/ducks/files/actions'
-import DeleteButton from '../components/UI/Buttons/DeleteButton'
-import DownloadButton from '../components/UI/Buttons/DownloadButton'
+// import FolderStructure from '../components/File/FolderTree/FolderStructure'
+import FolderStructure from '../components/File/FolderTree/FolderStructure'
+import { setFiles, setAllFiles } from '../store/ducks/files/actions'
+import FilesGrid from '../components/File/FilesGrid/FilesGrid'
+import FilesRow from'../components/File/FilesRow'
 
+const FilesViewTypes = {
+  GRID_VIEW: 'GRID_VIEW',
+  ROW_VIEW: 'ROW_VIEW'
+}
 
 const Files = () => {
-  // const [files, setFiles] = useState()
-  const {storages} = useStorageComponent()
+  const {openModal, setModalView, showModal, modalView, openUploader} = useUI()
+  const [filesView, setFilesView] = useState(FilesViewTypes.ROW_VIEW)
+ 
+  const addFolderBtnClick = () => {
+      setModalView('ADD_FOLDER_VIEW')
+      console.log(showModal, modalView)
+      openModal()
+  }
   const currentDir = useSelector(selectCurrentDir)
   const filesTree = useSelector(selectAllFiles)
   const files = useSelector(selectFiles)
@@ -42,17 +45,49 @@ const Files = () => {
     dispatch(setFiles(currentDir))
   }, [currentDir])
 
-
-  // const getFileFunck = async () => {
-  //   const response = await getFile('636dea604e46fd5b210fced1').then(res => res.data)
-  //   console.log(response)
-  // }
-  // getFileFunck()
+  const handleUploadFile = (e) => {
+    const files = [...e.target.files]
+    dispatch(uploadFile(files[0], currentDir))
+  }
 
   return (
     <div className='flex w-full h-full font-bold py-5 overflow-hidden'>
       <div className='w-full'>
-        <div className='text-2xl text-[#8997a1]'>Files</div>
+        {/* <div className='text-2xl text-[#8997a1]'>Files</div> */}
+        <div className='w-full h-auto flex justify-between py-5 border-b-[1px] border-[#c0c0c0]'>
+          <div>Облачный диск</div>
+          <div className='flex gap-4'>
+            <div className='flex items-center gap-2'>
+
+              <div 
+                className={`p-1 rounded-md hover:bg-slate-300 cursor-pointer text-[${filesView === FilesViewTypes.GRID_VIEW ? '#36a1ea' : '#ffffff'}]`} 
+                onClick={() => setFilesView(FilesViewTypes.GRID_VIEW)}
+              >
+                <BsFillGridFill size={20} />
+              </div>
+
+              <div 
+                className={`p-1 rounded-md hover:bg-slate-300 cursor-pointer text-[${filesView === FilesViewTypes.ROW_VIEW ? '#36a1ea' : '#ffffff'}]`} 
+                onClick={() => setFilesView(FilesViewTypes.ROW_VIEW)}
+              >
+                <ImMenu size={20} />
+              </div>
+              
+            </div>
+            <div className='flex items-center gap-1 cursor-pointer' onClick={addFolderBtnClick}>
+              <IoMdAddCircleOutline size={30} color={'#5cca72'} />
+              <span className='text-sm'>Создать папку</span>
+            </div>
+            <div className='cursor-pointer'>
+              <label className='text-sm flex items-center gap-1 cursor-pointer' for="upload_file">
+                <MdDownloading size={30} color={'#36a1ea'} />
+                Загрузить...
+                <input type="file" className='hidden' id='upload_file' onChange={(e) => handleUploadFile(e)}/>
+              </label>
+            </div>
+          </div>
+        </div>  
+
         <div className='w-full h-full flex pt-5'>
 
           <div className='w-[400px] h-full'>
@@ -69,37 +104,13 @@ const Files = () => {
             <div>DOCUMENTS</div>
               {files && files.length 
                 ?
-                <TableContainer>
-                  <Table>
-                      <TableHeader>
-                          <TableRow columnNumber={6}>
-                              <TableCell title={'Name'} colSpan={2} />
-                              <TableCell title={'File type'} />
-                              <TableCell title={'Lust Modified'} className={'justify-center'} />
-                              <TableCell title={'File size'} className={'justify-center'} />                                                                                                                     
-                              <TableCell />                                                                                                                     
-                          </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                          {files && files.map(file => {
-                            return <TableRow columnNumber={6}>
-                                      <TableCell title={file.name} colSpan={2} icon={selectFileIcon(file.type)} />
-                                      <TableCell title={file.type} />
-                                      <TableCell title={file.date.slice(0,10)} className={'justify-center'} />
-                                      <TableCell title={file.type === 'dir' ? '-' : file.size} className={'justify-center'}  />                                                                                      
-                                      <TableCell>
-                                        <div className='w-full h-full flex gap-2'>
-                                          <DeleteButton file={file} />
-                                          {file.type !== 'dir' && 
-                                            <DownloadButton file={file} />
-                                          }
-                                        </div>  
-                                      </TableCell>                                            
-                                  </TableRow>
-                          })}
-                      </TableBody>
-                  </Table>
-                </TableContainer>
+                <>
+                  {filesView === FilesViewTypes.GRID_VIEW ? (
+                    <FilesGrid files={files} />
+                  ) : (
+                    <FilesRow files={files} />
+                  )}
+                </>
                 :
                 <div className='w-full h-full flex flex-col items-center justify-center'>
                   <BsFolder2Open size={300} color={'#696969b5'} />
