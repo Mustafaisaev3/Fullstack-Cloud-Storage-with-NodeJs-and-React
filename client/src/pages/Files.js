@@ -17,6 +17,7 @@ import FolderStructure from '../components/File/FolderTree/FolderStructure'
 import { setFiles, setAllFiles } from '../store/ducks/files/actions'
 import FilesGrid from '../components/File/FilesGrid/FilesGrid'
 import FilesRow from'../components/File/FilesRow'
+import usePagination from '../hooks/usePagination'
 
 const FilesViewTypes = {
   GRID_VIEW: 'GRID_VIEW',
@@ -26,6 +27,8 @@ const FilesViewTypes = {
 const Files = () => {
   const {openModal, setModalView, showModal, modalView, openUploader} = useUI()
   const [filesView, setFilesView] = useState(FilesViewTypes.ROW_VIEW)
+
+ 
  
   const addFolderBtnClick = () => {
       setModalView('ADD_FOLDER_VIEW')
@@ -36,6 +39,11 @@ const Files = () => {
   const filesTree = useSelector(selectAllFiles)
   const files = useSelector(selectFiles)
   const dispatch = useDispatch()
+
+  const pagination = usePagination(files, 10)
+
+  // console.log(currentData(), 'current page')
+  const data = pagination.currentData()
 
   useEffect(() => {
     dispatch(setAllFiles())
@@ -50,9 +58,9 @@ const Files = () => {
     dispatch(uploadFile(files[0], currentDir))
   }
 
+
   return (
-    <div className='flex w-full h-full font-bold py-5 overflow-hidden'>
-      <div className='w-full'>
+    <div className='w-full h-full flex flex-col flex-1 font-bold py-5 overflow-hidden'>
         {/* <div className='text-2xl text-[#8997a1]'>Files</div> */}
         <div className='w-full h-auto flex justify-between py-5 border-b-[1px] border-[#c0c0c0]'>
           <div>Облачный диск</div>
@@ -88,7 +96,7 @@ const Files = () => {
           </div>
         </div>  
 
-        <div className='w-full h-full flex pt-5'>
+        <div className='w-full h-full flex flex-1 pt-5'>
 
           <div className='w-[400px] h-full'>
             <div>MY FOLDERS</div>
@@ -100,27 +108,26 @@ const Files = () => {
           </div>
 
 
-          <div className='pl-[30px] pb-[50px] grow'>
+          <div className='w-full h-full pl-[30px] pb-[50px] flex flex-col overflow-hidden'>
             <div>DOCUMENTS</div>
-              {files && files.length 
-                ?
-                <>
-                  {filesView === FilesViewTypes.GRID_VIEW ? (
-                    <FilesGrid files={files} />
-                  ) : (
-                    <FilesRow files={files} />
-                  )}
-                </>
-                :
-                <div className='w-full h-full flex flex-col items-center justify-center'>
-                  <BsFolder2Open size={300} color={'#696969b5'} />
-                  <div className='text-[50px] text-[#696969b5] font-semibold pt-8'>This folder is empty</div>
-                </div>
-              }
+            {files && files.length 
+              ?
+              <div className='flex-1 overflow-hidden'>
+                {filesView === FilesViewTypes.GRID_VIEW ? (
+                  <FilesGrid files={files} />
+                ) : (
+                  <FilesRow files={data} pagination={pagination}/>
+                )}
+              </div>
+              :
+              <div className='w-full h-full flex flex-col items-center justify-center'>
+                <BsFolder2Open size={300} color={'#696969b5'} />
+                <div className='text-[50px] text-[#696969b5] font-semibold pt-8'>This folder is empty</div>
+              </div>
+            }
                 
           </div>
         </div>
-      </div>
     </div>
   )
 }

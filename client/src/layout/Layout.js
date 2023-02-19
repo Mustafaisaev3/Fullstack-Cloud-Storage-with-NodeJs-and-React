@@ -10,7 +10,7 @@ const Layout = ({children}) => {
   return (
     <div className='w-screen h-screen bg-[#36a1ea] flex overflow-hidden'>
         <Sidebar />
-        <div className='h-screen flex-1 bg-[#e3f2f5] rounded-l-2xl p-[20px] overflow-hidden'>
+        <div className='h-screen flex flex-col flex-1 bg-[#e3f2f5] rounded-l-2xl p-[20px] overflow-hidden'>
             <Topbar setShowInfobar={setShowInfobar} />
             {children}
         </div>

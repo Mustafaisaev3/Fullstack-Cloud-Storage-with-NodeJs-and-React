@@ -8,8 +8,12 @@ import TableBody from '../UI/Table/TableBody'
 import DeleteButton from '../UI/Buttons/DeleteButton'
 import DownloadButton from '../UI/Buttons/DownloadButton'
 import { selectFileIcon } from '../../hooks/useFileIcon'
+import TableFooter from '../UI/Table/TableFooter'
+import Pagination from '../UI/Pagination/Pagination'
 
-const FilesRow = ({files}) => {
+const FilesRow = ({files, pagination}) => {
+//   const { prev, next, currentData } = usePagination(files)
+
   return (
     <TableContainer>
         <Table>
@@ -40,6 +44,14 @@ const FilesRow = ({files}) => {
                         </TableRow>
                 })}
             </TableBody>
+            <TableFooter>
+                <TableRow columnNumber={2} className='flex justify-between'>
+                    <div>sss</div>
+                    <div className='p-2'>
+                        <Pagination pagination={pagination} />
+                    </div>
+                </TableRow>
+            </TableFooter>
         </Table>
     </TableContainer>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 
 const TableBody = ({children}) => {
   return (
-    <div className='w-full h-full overflow-y-scroll overflow-x-scroll'>
+    <div className='w-full h-full flex-1 overflow-y-scroll overflow-x-auto'>
         {children}
     </div>
   )

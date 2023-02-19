@@ -8,6 +8,7 @@ import OptionsDropdown from '../../UI/OptionsDropdown/OptionsDropdown';
 import DropdownItem from '../../UI/OptionsDropdown/DropdownItem';
 import { downloadFile } from '../../../services/FilesService';
 import RenameFileInput from '../../RenameFileInput.js/RenameFileInput';
+import { selectFileIcon } from '../../../hooks/useFileIcon';
 
 const GridItemOptionsDropdown = ({file}) => {
     const [showDropdown, setShowDropdown] = useState(true)
@@ -18,7 +19,7 @@ const GridItemOptionsDropdown = ({file}) => {
     }
 
     return(
-        <div className='w-[25px] h-[25px] rounded-full hover:bg-slate-300 text-[#363636] absolute bottom-1 right-1 flex items-center justify-center cursor-pointer'>
+        <div className='w-[25px] h-[25px] rounded-full hover:bg-slate-300 text-[#363636] absolute top-1 right-1 flex items-center justify-center cursor-pointer'>
             <BsThreeDots size={20} color={'#363636'} />
             <OptionsDropdown>
                 {file.type !== 'dir' ? (
@@ -51,9 +52,14 @@ const FilesGridItem = ({file}) => {
         onMouseEnter = {() => setActive(true)}
         onMouseLeave = {() => setActive(false)}
     >
-        <FaFolder size={100} color={'#36a1ea'}/>
-        {/* <RenameFileInput file={file} colSpan={2} /> */}
-        {file.name}
+        {selectFileIcon(file.type, 100)}
+        {/* <FaFolder size={100} color={'#36a1ea'}/> */}
+        <div className='w-full mt-5 overflow-x-hidden relative'>
+            <h2 className='w-full text-center block overflow-hidden truncate'>{file.name}</h2>
+            {/* <div className='w-full h-auto text-center bg-white absolute top-0 left-0'>
+                {file.name}
+            </div> */}
+        </div>
         {active ? (
             <GridItemOptionsDropdown file={file} />
         ): null}

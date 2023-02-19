@@ -42,9 +42,9 @@ function App() {
                   <Route path={'/registration'} component={Registration} />
                   <Route path={'/login'} component={Login} />
                   <Layout>
+                    <Route path={'/'} exact component={Home} />
                     <Route path={'/files'} component={Files} />
                     <Route path={'/chat'} component={Chat} />
-                    <Route path={'/'} component={Home} />
                   </Layout>
               </Switch>
             <ManagedModal />
