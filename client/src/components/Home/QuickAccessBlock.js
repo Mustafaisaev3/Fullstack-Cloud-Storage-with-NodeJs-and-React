@@ -9,6 +9,7 @@ import { SiApplemusic } from'react-icons/si'
 import { HiDocument } from'react-icons/hi'
 import { useUI } from '../../context/ui.context'
 import { quickAccessItems } from '../../utils/quick-access-items'
+import { useEffect } from 'react'
 
 const QuickAccessBlock = () => {
   const {openModal, setModalView, setModalData} = useUI()
@@ -19,6 +20,10 @@ const QuickAccessBlock = () => {
     setModalView('QUICK_SEARCH_VIEW')
     return openModal()
   }
+
+//   useEffect(() => {
+//     handleQuickAccessItemClick(quickAccessItems[1])
+//   }, [])
   return (
     <div className='w-full py-10'>
         <div className='pb-5 text-2xl font-bold text-[#8997a1]'>Quick Access</div>

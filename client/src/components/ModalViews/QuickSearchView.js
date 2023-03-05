@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 
 import TableContainer from '../UI/Table/TableContainer'
 import Table from '../UI/Table/Table'
@@ -40,7 +40,7 @@ const QuickSearchView = () => {
     setActiveFile(item)
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let filteredFiles = []
     allfiles.map(file => {
         if(file.type !== 'dir' && activeFile.fileTypes.includes(file.type)){
@@ -59,7 +59,6 @@ const QuickSearchView = () => {
 
   return (
     <div className='w-[700px] h-[500px] bg-white flex flex-col '>
-        {/* <div className='w-full text-center py-4 text-[30px]'>Quick Access</div> */}
         <div className='w-full p-[20px] flex items-center justify-between border-b-[1px]'>
             <div className='text-[#7c8d96] text-[30px]'>
                 Quick Access
