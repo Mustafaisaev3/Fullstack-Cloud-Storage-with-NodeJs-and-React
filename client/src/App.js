@@ -28,13 +28,13 @@ function App() {
   }, [isAuth, dispatch])
   
 
-  useLayoutEffect(() => {
-    if(isAuth){
-      history.push('/')
-    } else {
-      history.push('/login')
-    }
-  }, [isAuth, history])
+  // useLayoutEffect(() => {
+  //   if(isAuth){
+  //     history.push('/')
+  //   } else {
+  //     history.push('/login')
+  //   }
+  // }, [isAuth, history])
 
   return (
         <ManagedUIContext>
@@ -43,7 +43,8 @@ function App() {
                   <Route path={'/login'} component={Login} />
                   <Layout>
                     <Route path={'/'} exact component={Home} />
-                    <Route path={'/files'} component={Files} />
+                    <Route path={'/files'} component={Files} exact={true} />
+                    <Route path={'/files/:dirID'} component={Files} />
                     <Route path={'/chat'} component={Chat} />
                   </Layout>
               </Switch>

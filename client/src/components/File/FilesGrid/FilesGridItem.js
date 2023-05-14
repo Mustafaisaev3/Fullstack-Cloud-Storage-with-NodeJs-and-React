@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 import { setCurrentDir } from '../../../store/ducks/files/actions';
 import {FaFolder} from 'react-icons/fa'
 import {BsThreeDots} from 'react-icons/bs'
@@ -37,18 +38,20 @@ const GridItemOptionsDropdown = ({file}) => {
 
 const FilesGridItem = ({file}) => {
     const [active, setActive] = useState(false)
+    const history = useHistory()
     const dispatch = useDispatch()
-    const handleDoubleClick = (e, id) => {
+    const handleDoubleClick = (e, file) => {
         setActive(true)
-        if (e.detail === 2) {
-            dispatch(setCurrentDir(id))
+        if (e.detail === 2 && file.type === 'dir') {
+            dispatch(setCurrentDir(file._id))
+            history.push(`/files/${file._id}`)
         }
     };
 
   return (
     <div 
         className={`w-full h-[200px] rounded-md flex flex-col items-center justify-center bg-white p-5 border-[5px] border-transparent hover:shadow-lg transition-all duration-400 relative`}
-        onClick={(e) => handleDoubleClick(e, file._id)}
+        onClick={(e) => handleDoubleClick(e, file)}
         onMouseEnter = {() => setActive(true)}
         onMouseLeave = {() => setActive(false)}
     >

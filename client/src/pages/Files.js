@@ -6,6 +6,8 @@ import { uploadFile } from '../store/ducks/files/actions'
 
 
 import { IoMdAddCircleOutline } from 'react-icons/io'
+// import { GrFormPreviousLink, GrLinkNext, GrLinkPrevious } from 'react-icons/gr'
+import { BsChevronRight, BsChevronLeft } from 'react-icons/bs'
 import { MdDownloading } from 'react-icons/md'
 // import { GiHamburgerMenu } from 'react-icons/gi'
 import { ImMenu } from 'react-icons/im'
@@ -18,6 +20,7 @@ import { setFiles, setAllFiles } from '../store/ducks/files/actions'
 import FilesGrid from '../components/File/FilesGrid/FilesGrid'
 import FilesRow from'../components/File/FilesRow'
 import usePagination from '../hooks/usePagination'
+import { useParams } from 'react-router-dom'
 
 const FilesViewTypes = {
   GRID_VIEW: 'GRID_VIEW',
@@ -27,8 +30,7 @@ const FilesViewTypes = {
 const Files = () => {
   const {openModal, setModalView, showModal, modalView, openUploader} = useUI()
   const [filesView, setFilesView] = useState(FilesViewTypes.ROW_VIEW)
-
- 
+  const { dirID } = useParams()
  
   const addFolderBtnClick = () => {
       setModalView('ADD_FOLDER_VIEW')
@@ -46,24 +48,37 @@ const Files = () => {
   const data = pagination.currentData()
 
   useEffect(() => {
+    dispatch(setFiles(dirID))
+  }, [dirID])
+
+  useEffect(() => {
     dispatch(setAllFiles())
   }, [files])
 
-  useEffect(() => {
-    dispatch(setFiles(currentDir))
-  }, [currentDir])
+  // useEffect(() => {
+  //   dispatch(setFiles(currentDir))
+  // }, [currentDir])
 
   const handleUploadFile = (e) => {
     const files = [...e.target.files]
     dispatch(uploadFile(files[0], currentDir))
   }
 
-
   return (
     <div className='w-full h-full flex flex-col flex-1 font-bold py-5 overflow-hidden'>
         {/* <div className='text-2xl text-[#8997a1]'>Files</div> */}
         <div className='w-full h-auto flex justify-between py-5 border-b-[1px] border-[#c0c0c0]'>
-          <div>Облачный диск</div>
+          <div className='flex items-center gap-8'>
+            <div>Облачный диск</div>
+            <div className='flex gap-4'>
+              <div className='bg-[#41c3ff] w-[30px] h-[25px] rounded-sm flex items-center justify-center cursor-pointer'>
+                <BsChevronLeft size={15} style={{color: 'white'}} />
+              </div>
+              <div className='bg-[#41c3ff] w-[30px] h-[25px] rounded-sm flex items-center justify-center cursor-pointer'>
+                <BsChevronRight size={15} style={{color: 'white'}} />
+              </div>
+            </div>
+          </div>
           <div className='flex gap-4'>
             <div className='flex items-center gap-2'>
 

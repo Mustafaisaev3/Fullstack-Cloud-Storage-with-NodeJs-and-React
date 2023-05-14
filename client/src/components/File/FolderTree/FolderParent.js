@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { Link } from 'react-router-dom'
 import { TiArrowSortedDown } from 'react-icons/ti'
 import { FaFolder, FaFolderOpen } from 'react-icons/fa'
 import { setCurrentDir } from '../../../store/ducks/files/actions'
@@ -24,7 +25,9 @@ const FolderParent = ({children, folderName, _id, type, hasChildFiles}) => {
                             :
                             <FaFolder size={25} color={'#36a1ea'} />
                         }
-                        <div className='pl-2'>{folderName}</div>
+                        <Link to={`/files/${_id}`}>
+                            <div className='pl-2'>{folderName}</div>
+                        </Link>
                     </div>
                 </div>
 

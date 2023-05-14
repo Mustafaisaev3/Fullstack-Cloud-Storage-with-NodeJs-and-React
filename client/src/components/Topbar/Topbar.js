@@ -17,7 +17,7 @@ const Topbar = ({setShowInfobar}) => {
 
   return (
     <div className='w-full flex justify-between items-center py-5'>
-        <SearchInput className='flex-1' />
+        <SearchInput />
         {/* <div className='flex items-center justify-center w-[200px] h-full p-[10px] rounded-lg bg-[#2ba7ff] text-white cursor-pointer' onClick={addFolderBtnClick}>
             <BsFolderPlus color='white' size={25} className='mr-3' />
             Add Folder

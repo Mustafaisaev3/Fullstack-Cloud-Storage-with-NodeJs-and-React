@@ -49,7 +49,7 @@ const QuickSearchView = () => {
         }
     })
     setFiles(filteredFiles)
-  }, [activeFile])
+  }, [activeFile, allfiles])
 
   useEffect(() => {
     dispatch(setAllFiles())
