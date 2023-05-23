@@ -33,8 +33,10 @@ export const login = async (email, password) => {
             password
         })
 
+        console.log(response, 'gggggg')
+
+        localStorage.setItem('cloud_token', response.data.token)
         if(response.status === 200){
-            localStorage.setItem('token', response.data.token)
             return {
                 status: true,
                 message: 'User loged',
@@ -57,11 +59,14 @@ export const auth = async () => {
 
     try {
         const response = await axios.get('http://localhost:5000/api/auth/auth', {
-            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+            headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`},
+            withCredentials: true
         })
 
+        console.log(response, 'gggggg')
+
+        localStorage.setItem('cloud_token', response.data.token)
         if(response.status === 200){
-            localStorage.setItem('token', response.data.token)
             console.log(response.data)
             return {
                 status: true,

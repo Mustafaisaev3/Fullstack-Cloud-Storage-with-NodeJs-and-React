@@ -13,10 +13,11 @@ module.exports = (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, config.get('secretKey'))
-        console.log(decoded, 'token', token)
+        
         req.user = decoded
+        res.cookie('cloud_token', token)
         next()
     } catch (error) {
-        return res.status(401).json({message: 'Auth errorrr'})
+        return res.status(401).json({message: error.message})
     }
 }

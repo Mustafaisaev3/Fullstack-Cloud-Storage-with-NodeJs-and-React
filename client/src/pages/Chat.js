@@ -1,47 +1,68 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react'
 import ChatLeftBar from '../components/Chat/ChatLeftBar/ChatLeftBar'
 import ChatPlace from '../components/Chat/ChatPlace/ChatPlace'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { selectCurrentUser } from '../store/ducks/users/selectors'
-import { selectActiveConversation } from '../store/ducks/chat/selectors'
+import { selectOnlineUsers } from '../store/ducks/chat/selectors'
+import { getOnlineUsers } from '../store/ducks/chat/actions'
+import io from "socket.io-client";
 
 const Chat = () => {
-  const [users, setUsers] = useState()
-  // const [activeConversation, setActiveConversation] = useState(null)
-  const activeConversation = useSelector(selectActiveConversation)
-  const getUsers = async () => {
-    const response = await axios.get(`http://localhost:5000/api/chat`, {
-      headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    setUsers(response.data)
-  }
+  const [activeConversation, setActiveConversation] = useState()
+  const socket = useRef()
+
+  const dispatch = useDispatch()
 
   const currentUser = useSelector(selectCurrentUser)
+  const onlineUsers = useSelector(selectOnlineUsers)
+
+  useLayoutEffect(() => {
+    socket.current = io("http://localhost:5000", {
+      // withCredentials: true,
+    });
+  }, [])
+  
+  // useEffect(() => {
+  //   socket.current.on("getMessage", (data) => {
+  //     const msg = {
+  //       sender: data.sender,
+  //       text: data.text,
+  //       conversationId: data.conversationId,
+  //       createdAt: Date.now(),
+  //     }
+  
+  //     if (activeConversation._id === data.conversationId){
+  //       dispatch(receiveMessage(msg))
+  //     }
+  //   });
+
+  // }, [activeConversation])
 
   useEffect(() => {
-    getUsers()
-  }, [])
+    socket.current.emit('addUser', currentUser.id)
+    socket.current.on('getUsers', (users) => {
+      const onlineUsersArr = users.map((user) => {
+        return user.userId
+      })
 
-  
+      dispatch(getOnlineUsers(onlineUsersArr))
+    })
+  }, [currentUser, socket.current])
 
   return (
     <div className='flex w-full h-full font-bold py-5 overflow-hidden'>
       <div className='w-full'>
         <div className='text-2xl text-[#8997a1]'>Chat</div>
+        {onlineUsers ? onlineUsers.map(user => {
+          return <div>{user.username}</div>
+        }) : null}
         <div className='w-full h-full flex py-7 gap-2'>
 
 
-            <ChatLeftBar currentUser={currentUser} users={users}  />
+            <ChatLeftBar usersOnline={onlineUsers} setActiveConversation={setActiveConversation}   />
 
 
-            <ChatPlace currentUser={currentUser} />
-
-
-            {/* <div className='w-[350px] h-full rounded-md bg-white'></div> */}
-
+            <ChatPlace activeConversation={activeConversation} socket={socket.current}/>
 
         </div>
       </div>

@@ -66,20 +66,21 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({message: "Password is incorrect"})
         }
 
+        const userObj = {
+            id: user.id,
+            email: user.email,
+            avatar: user.avatar
+        }
+
         // const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: '1h'})
-        const token = jwt.sign({id: user.id}, config.get('secretKey'))
+        // const token = jwt.sign({id: user.id}, config.get('secretKey'))
+        const token = jwt.sign(userObj, config.get('secretKey'))
 
         console.log(user)
-
+        res.cookie('cloud_token', token)
         return res.json({
             token,
-            user: {
-                id: user.id,
-                email: user.email,
-                diskSpace: user.diskSpace,
-                usedSpace: user.usedSpace,
-                avatar: user.avatar
-            }
+            user: userObj
         })
 
     } catch (error) {
@@ -93,18 +94,31 @@ router.get('/auth', authMiddleware, async (req, res) => {
     try {
         const user = await User.findOne({_id: req.user.id})
 
-        const token = jwt.sign({id: user.id}, config.get('secretKey'))
+        const userObj = {
+            id: user.id,
+            email: user.email,
+            avatar: user.avatar
+        }
 
+        const token = jwt.sign(userObj, config.get('secretKey'))
+        // const token = jwt.sign({id: user.id}, config.get('secretKey'))
+        
+
+        res.cookie('cloud_token', token)
         return res.json({
             token,
-            user: {
-                id: user.id,
-                email: user.email,
-                diskSpace: user.diskSpace,
-                usedSpace: user.usedSpace,
-                avatar: user.avatar
-            }
+            user: userObj
         })
+        // return res.cookie('cloud_token', token, { sameSite: 'none', secure: true }).json({
+        //     token,
+        //     user: {
+        //         id: user.id,
+        //         email: user.email,
+        //         diskSpace: user.diskSpace,
+        //         usedSpace: user.usedSpace,
+        //         avatar: user.avatar
+        //     }
+        // })
       
     } catch (error) {
         console.log(error)

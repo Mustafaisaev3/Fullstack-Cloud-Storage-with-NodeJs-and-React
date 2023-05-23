@@ -2,7 +2,7 @@ import React from 'react'
 
 const MessageBlock = ({children}) => {
   return (
-    <div className='py-5'>
+    <div className='py-2'>
         {children}
     </div>
   )

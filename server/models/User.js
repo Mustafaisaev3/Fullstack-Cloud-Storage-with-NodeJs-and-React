@@ -6,6 +6,7 @@ const User = new Schema({
     diskSpace: {type: Number, default: 1024**3*10},
     usedSpace: {type: Number, default: 1024**3*10},
     avatar: {type: String},
+    online: {type: Boolean, default: false},
     files: [{type: ObjectId, ref: 'file'}]
 })
 

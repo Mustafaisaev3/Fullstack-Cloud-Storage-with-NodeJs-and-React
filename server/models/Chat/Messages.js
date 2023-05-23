@@ -1,21 +1,38 @@
-import { Schema, model } from "mongoose";
+const { ObjectId, model, Schema } = require('mongoose')
 
 
-export const MessagesSchema = new Schema({
-    message: {
-        type: String,
-        require: true
+// const MessagesSchema = new Schema({
+//     text: {
+//         type: String,
+//         require: true
+//     },
+//     sender: {
+//         type: ObjectId, 
+//         ref: 'User',
+//         require: true
+//     },
+//     recipient: {
+//         type: ObjectId, 
+//         ref: 'User',
+//         require: true
+//     }
+// }, {timestamps: true})
+
+// module.exports = model('Message', MessagesSchema)
+
+const MessageSchema = new Schema(
+  {
+    conversationId: {
+      type: String,
     },
     sender: {
-        type: ObjectId, 
-        ref: 'User',
-        require: true
+      type: String,
     },
-    conversation: {
-        type: ObjectId, 
-        ref: 'Conversation',
-        require: true
-    }
-}, {timestamps: true})
+    text: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = model('Messages', MessagesSchema)
+module.exports = model("Message", MessageSchema);

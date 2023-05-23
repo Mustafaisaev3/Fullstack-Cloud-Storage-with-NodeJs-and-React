@@ -10,10 +10,20 @@ import DownloadButton from '../UI/Buttons/DownloadButton'
 import { selectFileIcon } from '../../hooks/useFileIcon'
 import TableFooter from '../UI/Table/TableFooter'
 import Pagination from '../UI/Pagination/Pagination'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { setCurrentDir } from '../../store/ducks/files/actions';
 
 const FilesRow = ({files, pagination}) => {
 //   const { prev, next, currentData } = usePagination(files)
-
+const dispatch = useDispatch()
+const history = useHistory()
+const handleDoubleClick = (e, file) => {
+    if (e.detail === 2 && file.type === 'dir') {
+        dispatch(setCurrentDir(file._id))
+        history.push(`/files/${file._id}`)
+    }
+};
   return (
     <TableContainer>
         <Table>
@@ -28,7 +38,7 @@ const FilesRow = ({files, pagination}) => {
             </TableHeader>
             <TableBody>
                 {files && files.map(file => {
-                return <TableRow columnNumber={6}>
+                return <TableRow columnNumber={6} onClick={(e) => handleDoubleClick(e, file)}>
                             <TableCell title={file.name} colSpan={2} icon={selectFileIcon(file.type)} />
                             <TableCell title={file.type} />
                             <TableCell title={file.date.slice(0,10)} className={'justify-center'} />
