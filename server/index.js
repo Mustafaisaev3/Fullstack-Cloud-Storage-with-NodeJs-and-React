@@ -17,6 +17,7 @@ const socketIo = require('socket.io');
 const authRouter = require('./routes/auth.routes')
 const fileRouter = require('./routes/file.routes')
 const chatRouter = require('./routes/chat.routes')
+const searchRouter = require('./routes/search.routes')
 
 
 const app = express();
@@ -46,6 +47,7 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/files', fileRouter)
 app.use('/api/chat', chatRouter)
+app.use('/api/search', searchRouter)
 
 
 mongoose.connect('mongodb://localhost:27017/Cloud_Storage')

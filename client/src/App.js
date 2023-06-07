@@ -6,6 +6,7 @@ import Layout from './layout/Layout';
 import Files from './pages/Files';
 import Chat from './pages/Chat';
 import New from './pages/New';
+import Search from './pages/Search';
 import Login from './pages/auth/Login';
 import Home from './pages/Home.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,6 +46,7 @@ function App() {
                     <Route path={'/files'} component={Files} exact={true} />
                     <Route path={'/files/:dirID'} component={Files} />
                     <Route path={'/chat'} component={Chat} />
+                    <Route path={'/search'} component={Search} />
                     <Route path={'/new'} component={New} />
                   </Layout>
               </Switch>

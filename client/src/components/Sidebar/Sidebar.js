@@ -47,7 +47,9 @@ const Sidebar = () => {
                 </MenuItem>
                 <MenuItem>
                     {/* <FaUsers size={40} color={'white'} /> */}
+                    <div onClick={() => history.push('/search')}>
                     <FiSearch size={40} color={'white'} />
+                    </div>
                 </MenuItem>
                 <MenuItem>
                     <SlSettings size={40} color={'white'} />
