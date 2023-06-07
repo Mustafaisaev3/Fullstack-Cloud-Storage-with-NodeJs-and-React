@@ -2,6 +2,7 @@ import React from 'react'
 import { HiHome } from 'react-icons/hi'
 import { CgFileDocument } from 'react-icons/cg'
 import { FaUsers, FaFolder } from 'react-icons/fa'
+import { FiSearch } from 'react-icons/fi'
 import { BiMessageSquareDots } from 'react-icons/bi'
 import { SlSettings } from 'react-icons/sl'
 import { AiOutlineCloudUpload } from 'react-icons/ai'
@@ -45,7 +46,8 @@ const Sidebar = () => {
                     </a> */}
                 </MenuItem>
                 <MenuItem>
-                    <FaUsers size={40} color={'white'} />
+                    {/* <FaUsers size={40} color={'white'} /> */}
+                    <FiSearch size={40} color={'white'} />
                 </MenuItem>
                 <MenuItem>
                     <SlSettings size={40} color={'white'} />

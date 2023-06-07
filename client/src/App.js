@@ -21,8 +21,6 @@ function App() {
   const history = useHistory()
   const isAuth = useSelector(selectIsAuth)
   const user = useSelector(selectCurrentUser)
-  const files = useSelector(selectFilesState)
-  console.log(files)
 
   useEffect(() => {
     dispatch(SetUser())

@@ -40,7 +40,7 @@ class FileController {
             } else {
                 files = await File.find({user: req.user.id})
             }
-            // console.log('sgsgsgsgsgssgsgg',files,'shshshsshsssshshhshs')
+            console.log('sgsgsgsgsgssgsgg',files,'shshshsshsssshshhshs')
             return res.json(files)
 
         } catch (error) {

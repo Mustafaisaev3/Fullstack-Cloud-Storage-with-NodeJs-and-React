@@ -3,7 +3,7 @@ import axios from "axios";
 export const getUserConversations = async (userId) => {
     try {
         const response = await axios.get(`http://localhost:5000/api/chat/${userId}`, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         return response.data
         
@@ -15,7 +15,7 @@ export const getUserConversations = async (userId) => {
 export const getAllUsers = async () => {
     try {
         const response = await axios.get(`http://localhost:5000/api/chat/users`, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         return response.data
         
@@ -27,7 +27,7 @@ export const getAllUsers = async () => {
 export const searchUser = async (searchStr) => {
     try {
         const response = await axios.get(`http://localhost:5000/api/chat/serach-user/?search=${searchStr}`, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         return response.data
         
@@ -39,7 +39,7 @@ export const searchUser = async (searchStr) => {
 export const sendMessage = async (payload) => {
     try {
         const response = await axios.post(`http://localhost:5000/api/chat/message`, payload, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         return response.data
         
@@ -51,7 +51,7 @@ export const sendMessage = async (payload) => {
 export const getMessages = async (conversationId) => {
     try {
         const response = await axios.get(`http://localhost:5000/api/chat/messages/${conversationId}`, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         return response.data
         
@@ -63,7 +63,7 @@ export const getMessages = async (conversationId) => {
 export const getOnlineUsers = async (onlineUsersIds) => {
     try {
         const response = await axios.post(`http://localhost:5000/api/chat/online-users`,{usersIds: onlineUsersIds}, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         return response.data
         

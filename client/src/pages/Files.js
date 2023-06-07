@@ -34,7 +34,6 @@ const Files = () => {
  
   const addFolderBtnClick = () => {
       setModalView('ADD_FOLDER_VIEW')
-      console.log(showModal, modalView)
       openModal()
   }
   const currentDir = useSelector(selectCurrentDir)
@@ -42,7 +41,7 @@ const Files = () => {
   const files = useSelector(selectFiles)
   const dispatch = useDispatch()
 
-  const pagination = usePagination(files, 10)
+  const pagination =  usePagination(files, 10)
 
   // console.log(currentData(), 'current page')
   const data = pagination.currentData()
@@ -102,7 +101,7 @@ const Files = () => {
               <span className='text-sm'>Создать папку</span>
             </div>
             <div className='cursor-pointer'>
-              <label className='text-sm flex items-center gap-1 cursor-pointer' for="upload_file">
+              <label className='text-sm flex items-center gap-1 cursor-pointer' htmlFor="upload_file">
                 <MdDownloading size={30} color={'#36a1ea'} />
                 Загрузить...
                 <input type="file" className='hidden' id='upload_file' onChange={(e) => handleUploadFile(e)}/>

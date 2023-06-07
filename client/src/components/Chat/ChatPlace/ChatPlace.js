@@ -103,7 +103,6 @@ const ChatPlace = ({ activeConversation, socket }) => {
 
     dispatch(sendMessage(msgObj))
     socket.emit('sendMessage', msgObj)
-    console.log(msgObj)
   }
 
   return (

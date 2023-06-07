@@ -3,7 +3,7 @@ import axios from "axios";
 export const getAllFiles = async () => {
     try {
         const response = await axios.get(`http://localhost:5000/api/files`, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         return response.data
         
@@ -15,7 +15,7 @@ export const getAllFiles = async () => {
 export const getFiles = async (dirId) => {
     try {
         const response = await axios.get(`http://localhost:5000/api/files${dirId ? '?parent='+dirId : ''}`, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         console.log(response.data, 'hello')
         return response.data
@@ -30,7 +30,7 @@ export const getFile = async (id) => {
         const response = await axios.get(`http://localhost:5000/api/files/file`, {
            id: id
         }, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+                headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}
             })
         console.log(response.data, 'file')
         return response.data
@@ -47,7 +47,7 @@ export const createDir = async (dirId, name) => {
             parent: dirId,
             type: 'dir'
         } ,
-        {  headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}  })
+        {  headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`}  })
         
         console.log(response.data, 'hello')
         return response.data
@@ -69,7 +69,7 @@ export const uploadFile = async (file, dirId) => {
         }
 
         const response = await axios.post(`http://localhost:5000/api/files/upload`, formData, {
-            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
+            headers: {Authorization: `Bearer ${localStorage.getItem('cloud_token')}`},
             onUploadProgress: progressEvent => {
                 const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
                 console.log('total', totalLength)
@@ -92,7 +92,7 @@ export const downloadFile = async (file) => {
     try {
         const response = await fetch(`http://localhost:5000/api/files/download/?id=${file._id}`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${localStorage.getItem('cloud_token')}`
             }
         })
 
@@ -117,7 +117,7 @@ export const deleteFile = async (file) => {
     try {
         const response = await axios.delete(`http://localhost:5000/api/files/?id=${file._id}`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${localStorage.getItem('cloud_token')}`
             }
         })
 
@@ -132,7 +132,7 @@ export const searchFile = async (searchWord) => {
     try {
         const response = await axios.get(`http://localhost:5000/api/files/search/?search=${searchWord}`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${localStorage.getItem('cloud_token')}`
             }
         })
         return response.data

@@ -38,8 +38,8 @@ const handleDoubleClick = (e, file) => {
             </TableHeader>
             <TableBody>
                 {files && files.map(file => {
-                return <TableRow columnNumber={6} onClick={(e) => handleDoubleClick(e, file)}>
-                            <TableCell title={file.name} colSpan={2} icon={selectFileIcon(file.type)} />
+                return <TableRow columnNumber={6} onClick={(e) => handleDoubleClick(e, file)} >
+                            <TableCell title={file.name} colSpan={2} icon={selectFileIcon(file.type)} className={file.type === 'dir' ? 'cursor-pointer' : ''} />
                             <TableCell title={file.type} />
                             <TableCell title={file.date.slice(0,10)} className={'justify-center'} />
                             <TableCell title={file.type === 'dir' ? '-' : file.size} className={'justify-center'}  />                                                                                      

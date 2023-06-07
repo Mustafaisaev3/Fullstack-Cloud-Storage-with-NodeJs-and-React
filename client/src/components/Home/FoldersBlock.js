@@ -1,25 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Card from '../UI/Card/Card'
+import OptionsDropdown from '../UI/OptionsDropdown/OptionsDropdown'
+import DropdownItem from '../UI/OptionsDropdown/DropdownItem'
+import { selectFiles, selectAllFiles } from '../../store/ducks/files/selectors'
+import { setAllFiles } from '../../store/ducks/files/actions'
+import { useUI } from '../../context/ui.context'
 
 // Icons
 import { FaFolder } from'react-icons/fa'
-import { BiDotsVerticalRounded } from'react-icons/bi'
-import { BiImage } from'react-icons/bi'
-import { BsFileEarmarkZip } from'react-icons/bs'
-import { FiYoutube, FiDownload } from'react-icons/fi'
-import { SiApplemusic } from'react-icons/si'
-import { HiDocument } from'react-icons/hi'
-import OptionsDropdown from '../UI/OptionsDropdown/OptionsDropdown'
-import { useUI } from '../../context/ui.context'
-import DropdownItem from '../UI/OptionsDropdown/DropdownItem'
-import { useSelector } from 'react-redux'
-import { selectFiles } from '../../store/ducks/files/selectors'
+import { useLayoutEffect } from 'react'
 
 const FoldersBlock = () => {
-  const {openModal} = useUI()
+  const dispatch = useDispatch()
+  const {openModal, setModalView, setModalData} = useUI()
 
-  const files = useSelector(selectFiles)
-//   console.log(files)
+  const [activeFolder, setActiveFolder] = useState(null)
+
+  useLayoutEffect(() => {
+    dispatch(setAllFiles())
+  }, [])
+
+  const files = useSelector(selectAllFiles)
+//   const files = useSelector(selectFiles)
+
+  const openFolderBtnClick = (e, file) => {
+    setActiveFolder(file._id)
+
+    if (e.detail === 2) {
+        setModalView('FOLDER_MODAL_VIEW')
+        setModalData(file)
+        openModal()
+    }
+  };
 
   return (
     <div className='w-full py-10'>
@@ -33,53 +46,22 @@ const FoldersBlock = () => {
             </OptionsDropdown>
         </div> 
         <div className='flex gap-4'>
-            <div className='flex gap-4 overflow-x-scroll'>
+            <div className='flex gap-4 overflow-x-scroll pb-4'>
                 {files && files.map((file) => {
-                    return  <Card classes='bg-[white] p-2 min-w-[200px]'>
-                                <div className='w-full h-full flex flex-col items-center justify-center'>
-                                    <FaFolder size={80} color={'#36a1ea'} />
-                                    <div>{file.name}</div>
-                                </div>
-                            </Card>
-                    })
-                }
+                    if (file.type === 'dir') {
+                        return  <Card classes={`bg-[white] p-2 min-w-[200px] cursor-pointer border-[1px] ${file._id === activeFolder ? 'border-[#36a1ea]' : 'border-transparent'}`} onClick={(e) => openFolderBtnClick(e,file)}>
+                                    <div className='w-full h-full flex flex-col items-center justify-center'>
+                                        <FaFolder size={80} color={'#36a1ea'} />
+                                        <div>{file.name}</div>
+                                    </div>
+                                </Card>
+                    } else {
+                        return null
+                    }
+
+                })}
                 
             </div>
-            {/* <div>
-                <Card classes='bg-[white]'>
-                    <div className='w-full h-full flex items-center justify-center'>
-                        <FiYoutube size={30} color={'#f95c5d'} />
-                    </div>
-                </Card>
-            </div>
-            <div>
-                <Card classes='bg-[white]'>
-                    <div className='w-full h-full flex items-center justify-center'>
-                        <SiApplemusic size={30} color={'#ffa545'} />
-                    </div>
-                </Card>
-            </div>
-            <div>
-                <Card classes='bg-[white]'>
-                    <div className='w-full h-full flex items-center justify-center'>
-                        <HiDocument size={30} color={'#5cadff'} />
-                    </div>
-                </Card>
-            </div>
-            <div>
-                <Card classes='bg-[white]'>
-                    <div className='w-full h-full flex items-center justify-center'>
-                        <BsFileEarmarkZip size={30} color={'#8997a1'} />
-                    </div>
-                </Card>
-            </div>
-            <div>
-                <Card classes='bg-[white]'>
-                    <div className='w-full h-full flex items-center justify-center'>
-                        <FiDownload size={30} color={'#7ce2aa'} />
-                    </div>
-                </Card>
-            </div> */}
         </div>
     </div>
   )

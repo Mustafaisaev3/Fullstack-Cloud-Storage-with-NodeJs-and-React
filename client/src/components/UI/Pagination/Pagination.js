@@ -2,6 +2,10 @@ import React from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 const Pagination = ({ pagination }) => {
+  if (!pagination) {
+    return
+  }
+
   const { prev, next, jump, currentPage, maxPage } = pagination
   let pages = []
   for(let i = 1; i <= maxPage; i++){
