@@ -16,7 +16,6 @@ const SearchInput = (props) => {
     }
 
     history.push(`/search?search=${searchValue}`)
-
   }
 
   return (

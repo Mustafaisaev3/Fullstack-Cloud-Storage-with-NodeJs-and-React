@@ -8,6 +8,7 @@ import Chat from './pages/Chat';
 import New from './pages/New';
 import Search from './pages/Search';
 import Login from './pages/auth/Login';
+import Download from './pages/download/[...token]';
 import Home from './pages/Home.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser, selectIsAuth } from './store/ducks/users/selectors';
@@ -41,6 +42,7 @@ function App() {
               <Switch>
                   <Route path={'/registration'} component={Registration} />
                   <Route path={'/login'} component={Login} />
+                  <Route path={'/download/:token'} component={Download} />
                   <Layout>
                     <Route path={'/'} exact component={Home} />
                     <Route path={'/files'} component={Files} exact={true} />

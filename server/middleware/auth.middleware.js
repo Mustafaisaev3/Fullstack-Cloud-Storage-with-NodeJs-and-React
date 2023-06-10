@@ -18,6 +18,6 @@ module.exports = (req, res, next) => {
         res.cookie('cloud_token', token)
         next()
     } catch (error) {
-        return res.status(401).json({message: error.message})
+        return res.status(401).json({status: 'error', message: error.message})
     }
 }

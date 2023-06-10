@@ -142,4 +142,47 @@ export const searchFile = async (searchWord) => {
     }
 }
 
-export default {getFiles, getAllFiles, createDir, uploadFile, downloadFile, deleteFile, searchFile};
+export const downloadFileInfo = async (token) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/files/file/${token}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('cloud_token')}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        return {status: 'error'}
+    }
+}
+
+export const downloadFileByToken = async (token, file) => {
+    try {
+        const response = await fetch(`http://localhost:5000/api/files/file/download/${token}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('cloud_token')}`
+            }
+        })
+
+        console.log(response)
+
+        if (response.status === 200){
+            const blob = await response.blob()
+            const downloadUrl = window.URL.createObjectURL(blob)
+            console.log(downloadUrl)
+
+            const link = document.createElement('a')
+            link.href = downloadUrl
+            link.download = file.name
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+        }
+        
+        // return response.data
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+export default {getFiles, getAllFiles, createDir, uploadFile, downloadFile, deleteFile, searchFile, downloadFileByToken, downloadFileInfo};

@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { FiSearch } from 'react-icons/fi'
-import { BsFillGridFill } from 'react-icons/bs'
+import { BsFillGridFill, BsSearch } from 'react-icons/bs'
 import { ImMenu } from 'react-icons/im'
 import FilesRow from '../components/File/FilesRow'
 import FilesGrid from '../components/File/FilesGrid/FilesGrid'
@@ -21,9 +21,12 @@ function useQuery () {
 const Seacrh = () => {
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
   const [filesView, setFilesView] = useState(FilesViewTypes.ROW_VIEW)
+
+  const history = useHistory()
   
-  const query = useQuery().get('search').replace(/"/g, '')
+  const query = useQuery().get('search')?.replace(/"/g, '')
   console.log(query)
 
   useLayoutEffect(() => {
@@ -38,6 +41,28 @@ const Seacrh = () => {
   }, [query])
 
   const pagination = usePagination(files, 10)
+
+  const handleSeacrh = () => {
+    if (!searchValue.length) {
+      return
+    }
+
+    history.push(`/search?search=${searchValue}`)
+  }
+
+  if (!query) {
+    return (
+        <div className='w-full h-full flex flex-col items-center justify-center gap-4'>
+            <div className='text-[50px] font-medium'>Search File!</div>
+            <div className='w-[500px] h-[50px] px-3 bg-white rounded-2xl flex items-center overflow-hidden'>
+                <input type="text" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} className='h-full w-full pl-3 outline-none'/>        
+                <div className={`p-2 rounded-md ${searchValue.length ? 'text-white bg-[#36a1ea]' : 'text-[#8997a1]'}`} onClick={handleSeacrh}>
+                    <BsSearch size={20} />
+                </div>
+            </div>
+        </div>
+    )
+  }
 
   if (loading) {
     return (

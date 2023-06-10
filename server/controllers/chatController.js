@@ -47,7 +47,7 @@ class ChatController {
 
             return res.status(200).json({status: 'success', data: conversation})
         } catch (error) {
-            res.status(400).json({error})
+            res.status(400).json({status: 'error', message: error.message})
         }
     }
 
@@ -80,7 +80,7 @@ class ChatController {
             }
 
         } catch (error) {
-            res.status(400).json({error})
+            res.status(400).json({status: 'error', message: error.message})
         }
     }
 
@@ -94,7 +94,7 @@ class ChatController {
 
           res.status(200).json({status: 'success', data: messages});
         } catch (err) {
-          res.status(400).json(err);
+          res.status(400).json({status: 'error', message: error.message});
         }
     }
 
@@ -109,7 +109,7 @@ class ChatController {
 
             return res.status(200).json({status: 'success', data: onlineUsers})
         } catch (error) {
-            res.status(400).json({error})
+            res.status(400).json({status: 'error', message: error.message})
         }
     }
 

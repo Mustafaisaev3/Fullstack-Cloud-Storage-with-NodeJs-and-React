@@ -3,6 +3,7 @@ const User = require('../models/User')
 const File = require('../models/File')
 const config = require('config')
 const fs = require('fs')
+const jwt = require('jsonwebtoken')
 
 
 class FileController {
@@ -69,11 +70,9 @@ class FileController {
     async uploadFile (req, res) {
         try {
             const file = req.files.file
-
-            
+     
             const parent = await File.findOne({user: req.user.id, _id: req.body.parent})
             const user= await User.findOne({_id: req.user.id})
-            
 
             if(user.usedSpace + file.size < user.diskSpace){
                 return res.status(400).json({message: "No space on the disk"})
@@ -110,6 +109,16 @@ class FileController {
                 user: user._id
             })
 
+            const fileObjForJwt = {
+                file_id: dbFile._id,
+                user_id: user._id
+            }
+
+            // const fileDownloadToken = `http://localhost:5000/api/files/file/${jwt.sign(fileObjForJwt, config.get('secretKey'))}`
+            const fileDownloadToken = jwt.sign(fileObjForJwt, config.get('secretKey'))
+
+            dbFile.downloadToken = fileDownloadToken
+
             await dbFile.save()
             await user.save()
 
@@ -125,6 +134,53 @@ class FileController {
             const file = await File.findOne({_id: req.query.id, user: req.user.id})
             // const path = `${config.get('filePath')}\\${req.user.id}\\${file.path}\\${file.name}`
             const path = `${config.get('filePath')}\\${req.user.id}\\${file.path}`
+            console.log(file, path)
+            if(fs.existsSync(path)){
+                return res.download(path, file.name)
+            }
+
+            return res.status(400).json({message: "File not found"})
+        } catch (error) {
+            return res.status(500).json({message: "Download error"})
+        }
+    }
+
+    async getFileInfoByLink (req, res) {
+        try { 
+            const { token } = req.params
+
+            console.log(token)
+
+            const decoded = jwt.verify(token, config.get('secretKey'))
+
+            const file = await File.findOne({_id: decoded.file_id, user: decoded.user_id})
+
+            if (!file) {
+                return res.status(400).json({message: "File not found"})
+            }
+
+
+            return res.status(200).json({status: 'success', data: file})
+        } catch (error) {
+            return res.status(500).json({status: 'error',message: error})
+        }
+    }
+
+    async downloadFileByToken (req, res) {
+        try { 
+            const { token } = req.params
+
+            console.log(token)
+
+            const decoded = jwt.verify(token, config.get('secretKey'))
+
+            const file = await File.findOne({_id: decoded.file_id, user: decoded.user_id})
+
+            if (!file) {
+                return res.status(400).json({message: "File not found"})
+            }
+
+            const path = `${config.get('filePath')}\\${decoded.user_id}\\${file.path}`
             console.log(file, path)
             if(fs.existsSync(path)){
                 return res.download(path, file.name)
