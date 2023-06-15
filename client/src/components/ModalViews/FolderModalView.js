@@ -10,6 +10,7 @@ import TableRow from '../UI/Table/TableRow'
 import TableCell from '../UI/Table/TableCell'
 import DeleteButton from '../UI/Buttons/DeleteButton'
 import DownloadButton from '../UI/Buttons/DownloadButton'
+import LinkButton from '../UI/Buttons/LinkButton'
 import PuffLoader from "react-spinners/PuffLoader";
 import { FaFolderOpen } from 'react-icons/fa'
 import useFoldersNavigation from '../../hooks/useFoldersPagination'
@@ -83,7 +84,7 @@ const FolderModalView = () => {
                     <TableContainer>
                         <Table>
                             <TableHeader>
-                                <TableRow columnNumber={6}>
+                                <TableRow columnNumber={5}>
                                     <TableCell title={'Name'} colSpan={2} />
                                     <TableCell title={'File type'} />
                                     <TableCell title={'Lust Modified'} className={'justify-center'} />
@@ -93,7 +94,7 @@ const FolderModalView = () => {
                             </TableHeader>
                             <TableBody>
                                 {currentData && currentData.map(file => {
-                                return <TableRow columnNumber={6} onClick={(e) => handleOpenFolderBtnClick(e, file)}>
+                                return <TableRow columnNumber={5} onClick={(e) => handleOpenFolderBtnClick(e, file)}>
                                             {/* <RenameFileInput file={file} colSpan={2} /> */}
                                             <TableCell title={file.name} />
                                             <TableCell title={file.type} />
@@ -102,9 +103,12 @@ const FolderModalView = () => {
                                             <TableCell>
                                             <div className='w-full h-full flex gap-2'>
                                                 <DeleteButton file={file} />
-                                                {file.type !== 'dir' && 
-                                                    <DownloadButton file={file} />
-                                                }
+                                                {file.type !== 'dir' && (
+                                                    <>
+                                                        <DownloadButton file={file} />
+                                                        <LinkButton file={file} />
+                                                    </>
+                                                )}
                                             </div>  
                                             </TableCell>                                            
                                         </TableRow>

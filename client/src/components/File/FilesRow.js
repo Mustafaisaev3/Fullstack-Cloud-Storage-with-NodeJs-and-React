@@ -7,6 +7,7 @@ import TableCell from '../UI/Table/TableCell'
 import TableBody from '../UI/Table/TableBody'
 import DeleteButton from '../UI/Buttons/DeleteButton'
 import DownloadButton from '../UI/Buttons/DownloadButton'
+import LinkButton from '../UI/Buttons/LinkButton'
 import { selectFileIcon } from '../../hooks/useFileIcon'
 import TableFooter from '../UI/Table/TableFooter'
 import Pagination from '../UI/Pagination/Pagination'
@@ -47,7 +48,10 @@ const handleDoubleClick = (e, file) => {
                             <div className='w-full h-full flex gap-2'>
                                 <DeleteButton file={file} />
                                 {file.type !== 'dir' && 
-                                <DownloadButton file={file} />
+                                <>
+                                    <DownloadButton file={file} />
+                                    <LinkButton file={file} />
+                                </>
                                 }
                             </div>  
                             </TableCell>                                            

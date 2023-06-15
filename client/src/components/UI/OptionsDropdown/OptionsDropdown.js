@@ -17,7 +17,7 @@ const OptionsDropdown = ({children}) => {
             <BiDotsVerticalRounded size={25} color={'#8997a1'} />
         </div>
         {showDropdown &&
-            <div className='absolute right-full min-w-[150px] h-auto rounded-lg bg-[#2ba7ff] overflow-hidden py-2'>
+            <div className='absolute right-full p-2 min-w-[150px] h-auto rounded-lg bg-[#a8bbc6] border-[#444] shadow-lg overflow-hidden py-2'>
                 {children}
             </div>
         }

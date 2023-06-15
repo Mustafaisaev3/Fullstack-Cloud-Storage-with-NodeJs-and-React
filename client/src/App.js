@@ -8,6 +8,7 @@ import Chat from './pages/Chat';
 import New from './pages/New';
 import Search from './pages/Search';
 import Login from './pages/auth/Login';
+import User from './pages/User';
 import Download from './pages/download/[...token]';
 import Home from './pages/Home.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,6 +51,7 @@ function App() {
                     <Route path={'/chat'} component={Chat} />
                     <Route path={'/search'} component={Search} />
                     <Route path={'/new'} component={New} />
+                    <Route path={'/user'} component={User} />
                   </Layout>
               </Switch>
             <ManagedModal />

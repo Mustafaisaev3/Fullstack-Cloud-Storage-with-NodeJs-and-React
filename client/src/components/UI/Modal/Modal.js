@@ -4,8 +4,6 @@ import useOnClickOutside from '../../../utils/use-click-outside';
 import { Portal } from 'react-portal';
 
 
-
-
 const Modal = ({open, onClose, children}) => {
   const {closeModal} = useUI()
   const modalRootRef = useRef()

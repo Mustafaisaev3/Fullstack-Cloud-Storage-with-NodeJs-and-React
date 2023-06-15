@@ -23,6 +23,7 @@ import { selectFiles, selectAllFiles } from '../../store/ducks/files/selectors'
 import { setAllFiles } from '../../store/ducks/files/actions'
 import DeleteButton from '../UI/Buttons/DeleteButton'
 import DownloadButton from '../UI/Buttons/DownloadButton'
+import LinkButton from '../UI/Buttons/LinkButton'
 import { useUI } from '../../context/ui.context'
 import RenameFileInput from '../RenameFileInput.js/RenameFileInput'
 
@@ -58,7 +59,7 @@ const QuickSearchView = () => {
 
 
   return (
-    <div className='w-[700px] h-[500px] bg-white flex flex-col '>
+    <div className='w-[750px] h-[500px] bg-white flex flex-col '>
         <div className='w-full p-[20px] flex items-center justify-between border-b-[1px]'>
             <div className='text-[#7c8d96] text-[30px]'>
                 Quick Access
@@ -102,9 +103,12 @@ const QuickSearchView = () => {
                                         <TableCell>
                                         <div className='w-full h-full flex gap-2'>
                                             <DeleteButton file={file} />
-                                            {file.type !== 'dir' && 
-                                                <DownloadButton file={file} />
-                                            }
+                                            {file.type !== 'dir' && (
+                                                <>
+                                                    <DownloadButton file={file} />
+                                                    <LinkButton file={file} />
+                                                </>
+                                            )}
                                         </div>  
                                         </TableCell>                                            
                                     </TableRow>

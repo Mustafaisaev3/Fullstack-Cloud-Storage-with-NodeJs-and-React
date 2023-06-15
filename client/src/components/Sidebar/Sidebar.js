@@ -48,12 +48,14 @@ const Sidebar = () => {
                 <MenuItem>
                     {/* <FaUsers size={40} color={'white'} /> */}
                     <div onClick={() => history.push('/search')}>
-                    <FiSearch size={40} color={'white'} />
+                        <FiSearch size={40} color={'white'} />
                     </div>
                 </MenuItem>
-                <MenuItem>
-                    <SlSettings size={40} color={'white'} />
-                </MenuItem>
+                {/* <MenuItem>
+                    <div onClick={() => history.push('/user')}>
+                        <SlSettings size={40} color={'white'} />
+                    </div>
+                </MenuItem> */}
             </div>
             <div>
                 <MenuItem>

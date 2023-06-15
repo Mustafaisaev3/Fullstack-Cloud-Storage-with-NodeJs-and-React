@@ -14,6 +14,7 @@ import { setFiles } from '../store/ducks/files/actions'
 
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import FoldersBlock from '../components/Home/FoldersBlock'
+import RecentlyAdded from '../components/Home/RecentlyAdded'
 
 
 const Home = () => {
@@ -38,122 +39,7 @@ const Home = () => {
         </div>
         <QuickAccessBlock />
         <FoldersBlock />
-        <div className='grow overflow-y-hidden'>
-            <div className='flex items-center justify-between pb-5'>
-                <div className='text-2xl text-[#8997a1]'>Recently Added</div>
-                <BiDotsVerticalRounded size={25} color={'#8997a1'} />
-            </div>
-            <TableContainer>
-                <Table>
-                    <TableHeader>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} />
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                                                                                                     
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['DropBox']} />
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                            
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['GoogleDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                          
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['OneDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                           
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['DropBox']} />
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                            
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['GoogleDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                          
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['OneDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                           
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['DropBox']} />
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                            
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['GoogleDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                          
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['OneDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                           
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['DropBox']} />
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                            
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['GoogleDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                          
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['OneDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                           
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['GoogleDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                          
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['OneDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                           
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['GoogleDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                          
-                        </TableRow>
-                        <TableRow columnNumber={5}>
-                            <TableCell title={'Name'} colSpan={2} icon={storages['OneDrive']}/>
-                            <TableCell title={'File item'} />
-                            <TableCell title={'Lust Modified'} />
-                            <TableCell title={'File size'} />                                           
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
+        <RecentlyAdded />
     </div>
   )
 }

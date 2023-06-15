@@ -1,11 +1,14 @@
 import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { BsImageFill } from 'react-icons/bs'
+import { BsDownload } from 'react-icons/bs'
+import Button from '../../components/UI/Buttons/Button'
 import { MdError } from 'react-icons/md'
 import { useState, useLayoutEffect } from 'react'
 import { downloadFileInfo ,downloadFileByToken } from '../../services/FilesService'
 import PuffLoader from "react-spinners/PuffLoader";
 import { selectFileIcon } from '../../hooks/useFileIcon'
+import { Button_Types } from '../../components/UI/Buttons/Button'
 
 const Download = () => {
   const history = useHistory()
@@ -64,8 +67,10 @@ const Download = () => {
                     <img src='/assets/logo.png' alt='logo' />
                 </div>
                 <div className='flex items-center gap-4'>
-                    <div className='w-[100px] h-[50px] flex items-center justify-center rounded-md bg-[#6deeff]'>login</div>
-                    <div className='w-[100px] h-[50px] flex items-center justify-center rounded-md bg-[#6dffe4]'>register</div>
+                    {/* <div className='w-[100px] h-[50px] flex items-center justify-center rounded-md bg-[#6deeff]'>login</div>
+                    <div className='w-[100px] h-[50px] flex items-center justify-center rounded-md bg-[#6dffe4]'>register</div> */}
+                    <Button label={'login'} btn_type='primary' outline className='w-[200px]'/>
+                    <Button label={'register'} btn_type='secondary' className='w-[200px]'/>
                 </div>
             </div>
 
@@ -82,7 +87,7 @@ const Download = () => {
                                     <div className='text-white text-[18px]'>{file.name}</div>
                                     <span className='text-[#e6e5e5] text-[15px]'>{file.size / 1000} KB</span>
                                 </div>
-                                <div className='w-[150px] h-[50px] flex items-center justify-center rounded-md bg-white' onClick={handleDownloadFile}>download</div>
+                                <Button btn_type={Button_Types.success} light icon={BsDownload} label={'download'} onClick={handleDownloadFile} className='w-[200px]'/>
                             </div>
                         </div>
 

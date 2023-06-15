@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import { setCurrentDir } from '../../../store/ducks/files/actions';
 import {FaFolder} from 'react-icons/fa'
+import { BiLinkAlt } from 'react-icons/bi'
+import { MdDriveFileRenameOutline } from 'react-icons/md'
+import { HiDownload } from 'react-icons/hi'
 import {BsThreeDots} from 'react-icons/bs'
 import { useState } from 'react';
 import OptionsDropdown from '../../UI/OptionsDropdown/OptionsDropdown';
@@ -10,9 +13,17 @@ import DropdownItem from '../../UI/OptionsDropdown/DropdownItem';
 import { downloadFile } from '../../../services/FilesService';
 import RenameFileInput from '../../RenameFileInput.js/RenameFileInput';
 import { selectFileIcon } from '../../../hooks/useFileIcon';
+import { useUI } from '../../../context/ui.context';
 
 const GridItemOptionsDropdown = ({file}) => {
+    const { openModal, setModalView, setModalData } = useUI()
     const [showDropdown, setShowDropdown] = useState(true)
+
+    const handleDownloadLinkBtnClick = () => {
+        setModalData(file)
+        setModalView('DOWNLOAD_LINK_MODAL_VIEW')
+        openModal()
+    }
 
     const handleDownloadClick = (e, file) => {
         e.stopPropagation()
@@ -25,11 +36,12 @@ const GridItemOptionsDropdown = ({file}) => {
             <OptionsDropdown>
                 {file.type !== 'dir' ? (
                     <>
-                        <DropdownItem>Rename file</DropdownItem>
-                        <DropdownItem onClick={(e) => handleDownloadClick(e, file)}>Download file</DropdownItem>
+                        <DropdownItem icon={<MdDriveFileRenameOutline ize={15} />}>Rename file</DropdownItem>
+                        <DropdownItem icon={<HiDownload size={15} />} onClick={(e) => handleDownloadClick(e, file)}>Download file</DropdownItem>
+                        <DropdownItem icon={<BiLinkAlt size={15} />} onClick={handleDownloadLinkBtnClick}>Download Link</DropdownItem>
                     </>
                 ) : (
-                    <DropdownItem>Rename folder</DropdownItem>
+                    <DropdownItem icon={<MdDriveFileRenameOutline ize={15} />}>Rename folder</DropdownItem>
                 )}
             </OptionsDropdown>
         </div>

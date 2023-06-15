@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const config = require('config')
 const fileuploader = require('express-fileupload')
 const http = require('http')
+const path = require('path');
 const ws = require('ws')
 const cors = require('./middleware/cors.middleware')
 const jwt = require('jsonwebtoken')
@@ -31,6 +32,8 @@ const wss = socketIo(server, {
 });
 
 const PORT = config.get('serverPort')
+
+app.use('/files', express.static(path.join(__dirname, 'files')));
 
 app.use(cookieParser());
 app.use(fileuploader({}))
